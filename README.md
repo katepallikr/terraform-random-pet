@@ -5,10 +5,10 @@ Example Terraform Module to demonstrate TFC/TFE module publishing workflow.
 ## Usage
 ```hcl
 module "pet" {
-    source = "tfcarl.is.hashicorpdemo.com/pet/random"
-    string_length = 5
+  source  = "tfcarl.is.hashicorpdemo.com/hashicorp/pet/random"
+  version = "0.0.1"
+  string_length = 5
 }
-
 ```
 
 
