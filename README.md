@@ -1,4 +1,4 @@
-# terraform-random_pet-module
+# terraform-random-pet module
 Example Terraform Module to demonstrate TFC/TFE module publishing workflow into the [Private Module Registry](https://www.terraform.io/docs/cloud/registry/index.html).
 
 
