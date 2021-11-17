@@ -2,6 +2,8 @@
 Example Terraform Module to demonstrate TFC/TFE module publishing workflow.
 
 
+![Giphy](https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif)
+
 ## Usage
 ```hcl
 module "pet" {
