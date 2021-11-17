@@ -47,6 +47,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_random_pet_nickname"></a> [random\_pet\_nickname](#output\_random\_pet\_nickname) | n/a |
-| <a name="output_random_string_output"></a> [random\_string\_output](#output\_random\_string\_output) | n/a |
+| <a name="output_random_pet_nickname"></a> [random\_pet\_nickname](#output\_random\_pet\_nickname) | Random Pet Nickname generated |
+| <a name="output_random_string_output"></a> [random\_string\_output](#output\_random\_string\_output) | Random String generated |
 <!-- END_TF_DOCS -->
