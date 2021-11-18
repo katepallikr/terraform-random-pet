@@ -15,8 +15,16 @@ The local `index.html` file created can be viewed locally and has a simple stati
 ```hcl
 module "pet" {
   source  = "tfcarl.is.hashicorpdemo.com/hashicorp/pet/random"
-  version = "0.0.1"
+  version = "x.x.x"
   string_length = 5
+}
+
+output "random_string_output" {
+  value = module.pet.random_string_output
+}
+
+output "random_pet_nickname" {
+    value = module.pet.random_pet_nickname
 }
 ```
 
