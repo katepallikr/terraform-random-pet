@@ -72,3 +72,10 @@ No modules.
 | <a name="output_random_pet_nickname"></a> [random\_pet\_nickname](#output\_random\_pet\_nickname) | Random Pet Nickname generated |
 | <a name="output_random_string_output"></a> [random\_string\_output](#output\_random\_string\_output) | Random String generated |
 <!-- END_TF_DOCS -->
+
+
+
+## Future Work
+
+- Make index.html show pets instead of hashicorp coffee cups.
+- Utilise a random number to be injected into javascript inside index.html
