@@ -9,5 +9,5 @@ resource "random_pet" "nickname" {
 # Will generate a index.html file which can be viewed by a local browser.
 resource "local_file" "html" {
   filename = "./index.html"
-  content = templatefile("${path.module}/templates/index.html.tpl", { nickname   = random_pet.nickname.id })
+  content  = templatefile("${path.module}/templates/index.html.tpl", { nickname = random_pet.nickname.id })
 }
