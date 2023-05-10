@@ -38,6 +38,8 @@ jobs:
           cloud {}
           }
           EOF
+
+          ls -lh
       
       - name: Terraform Version
         run: terraform -v

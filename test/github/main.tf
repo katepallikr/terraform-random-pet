@@ -1,5 +1,5 @@
 module "pet" {
-    source = "./module/pet"
+    source = "./modules/pet"
     string_length = 5
 }
 
