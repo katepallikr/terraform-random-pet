@@ -18,7 +18,7 @@ jobs:
       
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
@@ -39,7 +39,8 @@ jobs:
         run: terraform apply -auto-approve
       
       - name: Run additional tests
-        run: cat index.html
+        run: |
+          cat index.html
 
       - name: Destroy
-      run: terraform destroy -auto-approve
+        run: terraform destroy -auto-approve
