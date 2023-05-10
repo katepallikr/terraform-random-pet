@@ -30,7 +30,7 @@ jobs:
         # CLI workflow cannot upload the module files that are in upper directory
       - name: Set up local module
         run: |
-          mkdir - p modules/pet
+          mkdir -p modules/pet
           cp ../../*.tf modules/pet
           cp -R ../../templates modules/pet/
           cat << EOF > backend.tf
