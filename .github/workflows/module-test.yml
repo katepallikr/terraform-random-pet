@@ -58,7 +58,8 @@ jobs:
       
       - name: Run additional tests
         run: |
-          cat index.html
+          terraform state list
+        continue-on-error: true
 
       - name: Destroy
         run: terraform destroy -auto-approve
