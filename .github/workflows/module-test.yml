@@ -25,6 +25,19 @@ jobs:
       
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
+
+        # The following is only required for testing new changes in the branch
+        # CLI workflow cannot upload the module files that are in upper directory
+      - name: Set up local module
+        run: |
+          mkdir - p modules/pet
+          cp ../../*.tf modules/pet
+          cp -R ../../templates modules/pet/
+          cat << EOF > backend.tf
+          terraform {
+          cloud {}
+          }
+          EOF
       
       - name: Terraform Version
         run: terraform -v

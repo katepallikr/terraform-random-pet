@@ -1,10 +1,5 @@
-terraform {
-  cloud {}
-}
-
-
 module "pet" {
-    source = "../../"
+    source = "./module/pet"
     string_length = 5
 }
 
