@@ -8,8 +8,11 @@ on:
       - main
 
 jobs:
-  test:
+  test-modue:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: test/github
     env:
       TF_CLOUD_HOSTNAME: ${{vars.TF_CLOUD_HOSTNAME}}
       TF_CLOUD_ORGANIZATION: ${{vars.TF_CLOUD_ORGANIZATION}}
@@ -41,7 +44,6 @@ jobs:
       - name: Run additional tests
         run: |
           cat index.html
-          echo $TF_WORKSPACE
 
       - name: Destroy
         run: terraform destroy -auto-approve
