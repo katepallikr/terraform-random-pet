@@ -42,24 +42,66 @@ jobs:
           ls -lh
       
       - name: Terraform Version
+        id: version
         run: terraform -v
 
       - name: Initialize Terraform
+        id: init
         run: terraform init
       
       - name: Validate Terraform
+        id: validate
         run: terraform validate
 
       - name: Plan changes
+        id: plan
         run: terraform plan
       
       - name: Apply changes
+        id: apply
         run: terraform apply -auto-approve
       
       - name: Run additional tests
+        id: tests
         run: |
           terraform state list
         continue-on-error: true
+
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          APPLY: ${{ steps.apply.outputs.stdout }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan and Apply</summary>
+
+            \`\`\`terraform\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            \`\`\`terraform\n
+            ${process.env.Apply}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
 
       - name: Destroy
         run: terraform destroy -auto-approve
