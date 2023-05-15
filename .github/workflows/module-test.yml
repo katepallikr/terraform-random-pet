@@ -20,6 +20,7 @@ jobs:
       TF_TOKEN_app_terraform_io: ${{secrets.TF_TOKEN}}
       TF_IN_AUTOMATION: true
       TF_INPUT: 0
+      TERM: "xterm-mono"
       
     steps:
       - name: Checkout code
@@ -74,6 +75,8 @@ jobs:
           echo $PLAN
           echo "\n\n\nAPPLY OUTPUT\n\n\n**********"
           echo $APPLY
+          echo "\n\n\nTERM shell variable\n\n\n**********"
+          echo "$TERM"
         continue-on-error: true
 
       - name: Update Pull Request
