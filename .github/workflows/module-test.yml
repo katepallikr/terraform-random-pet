@@ -19,6 +19,7 @@ jobs:
       TF_WORKSPACE: ${{vars.TF_WORKSPACE}}
       TF_TOKEN_app_terraform_io: ${{secrets.TF_TOKEN}}
       TF_IN_AUTOMATION: true
+      TF_INPUT: 0
       
     steps:
       - name: Checkout code
@@ -56,11 +57,11 @@ jobs:
 
       - name: Plan changes
         id: plan
-        run: terraform plan
+        run: terraform plan -no-color
       
       - name: Apply changes
         id: apply
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -no-color
       
       - name: Run additional tests
         id: tests
@@ -89,7 +90,7 @@ jobs:
             \`\`\`
 
             \`\`\`terraform\n
-            ${process.env.Apply}
+            ${process.env.APPLY}
             \`\`\`
 
             </details>
