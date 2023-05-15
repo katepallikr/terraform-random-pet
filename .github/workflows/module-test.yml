@@ -65,8 +65,15 @@ jobs:
       
       - name: Run additional tests
         id: tests
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          APPLY: ${{ steps.apply.outputs.stdout }}
         run: |
           terraform state list
+          echo "\n\n\nPLAN OUTPUT\n\n\n**********"
+          echo $PLAN
+          echo "\n\n\nAPPLY OUTPUT\n\n\n**********"
+          echo $APPLY
         continue-on-error: true
 
       - name: Update Pull Request
