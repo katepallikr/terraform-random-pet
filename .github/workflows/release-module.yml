@@ -1,0 +1,21 @@
+name: Release Module
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Module version number'
+        required: true
+        default: ''
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Release
+          uses: softprops/action-gh-release@v1
+          with:
+            tag_name: ${{ github.event.inputs.version }}

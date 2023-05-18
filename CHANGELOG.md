@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+
+<a name="v0.0.4"></a>
+## [v0.0.4] - 2022-11-22
+
+- Update minimum TF Version
+
 <a name="v0.0.3"></a>
 ## [v0.0.3] - 2021-11-18
 

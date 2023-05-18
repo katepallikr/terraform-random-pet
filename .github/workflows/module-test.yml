@@ -18,6 +18,10 @@ jobs:
       TF_CLOUD_ORGANIZATION: ${{vars.TF_CLOUD_ORGANIZATION}}
       TF_WORKSPACE: ${{vars.TF_WORKSPACE}}
       TF_TOKEN_app_terraform_io: ${{secrets.TF_TOKEN}}
+      TF_IN_AUTOMATION: true
+      TF_INPUT: 0
+      TF_CLI_ARGS: "-no-color" 
+
       
     steps:
       - name: Checkout code
@@ -42,24 +46,75 @@ jobs:
           ls -lh
       
       - name: Terraform Version
+        id: version
         run: terraform -v
 
       - name: Initialize Terraform
+        id: init
         run: terraform init
       
       - name: Validate Terraform
+        id: validate
         run: terraform validate
 
       - name: Plan changes
-        run: terraform plan
+        id: plan
+        run: terraform plan -no-color
       
       - name: Apply changes
-        run: terraform apply -auto-approve
+        id: apply
+        run: terraform apply -auto-approve -no-color
       
       - name: Run additional tests
+        id: tests
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          APPLY: ${{ steps.apply.outputs.stdout }}
         run: |
           terraform state list
+          echo "\n\n\nPLAN OUTPUT\n\n\n**********"
+          echo $PLAN
+          echo "\n\n\nAPPLY OUTPUT\n\n\n**********"
+          echo $APPLY
+          echo "\n\n\nTERM shell variable\n\n\n**********"
+          echo "$TERM"
         continue-on-error: true
 
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: ${{ steps.plan.outputs.stdout }}
+          APPLY: ${{ steps.apply.outputs.stdout }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+            <details><summary>Show Plan and Apply</summary>
+
+            \`\`\`terraform\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            \`\`\`terraform\n
+            ${process.env.APPLY}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+
       - name: Destroy
-        run: terraform destroy -auto-approve
+        run: terraform destroy -auto-approve -no-color
